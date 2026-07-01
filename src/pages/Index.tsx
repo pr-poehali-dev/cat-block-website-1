@@ -385,7 +385,7 @@ const Index = () => {
             <div>
               <Reveal>
                 <p className="text-lg text-foreground/90 leading-relaxed mb-5">
-                  <span className="font-semibold">[Имя мастера]</span> — владелец автосервиса в Уссурийске, 7 лет специализируется на диагностике и ремонте систем кондиционирования японских автомобилей.
+                  <span className="font-semibold">Игорь</span> — владелец автосервиса в Уссурийске, 7 лет специализируется на диагностике и ремонте систем кондиционирования японских автомобилей.
                 </p>
                 <p className="text-muted-foreground leading-relaxed mb-8">
                   За это время через мастерскую прошло более 1 200 автомобилей с неисправными кондиционерами. Работает с R134a, R1234yf, гибридными системами Toyota, Lexus, Honda.
