@@ -14,6 +14,24 @@ const masterFacts = [
   { icon: 'Star', value: '4.9', label: 'рейтинг на 2ГИС' },
 ];
 
+const reviews = [
+  {
+    name: 'Андрей К.',
+    role: 'автомеханик, Уссурийск',
+    text: 'До курса боялся браться за кондиционеры вообще. После — сделал 11 заправок за первый месяц. Уже окупил стоимость обучения раза в три. Самое ценное — научил думать по давлениям, а не тыкать наугад.',
+  },
+  {
+    name: 'Дмитрий Р.',
+    role: 'СТО «Автолюкс», Владивосток',
+    text: 'Приехал из Владика специально. Два дня теории показались лишними — зря думал. К третьему дню понял что без этой базы на практике ничего не понимал бы. Уже взял в работу первые Тойоты с R1234yf.',
+  },
+  {
+    name: 'Сергей М.',
+    role: 'частный мастер, Артём',
+    text: 'Группа маленькая — 5 человек. Мастер не читает лекции, а сразу объясняет на конкретной машине. Единственное место в Приморье где реально учат, а не просто берут деньги.',
+  },
+];
+
 const bullets = [
   '2 недели интенсивной практики на реальных авто',
   'Группа до 6 человек — внимание каждому',
@@ -351,6 +369,49 @@ const Index = () => {
                 </blockquote>
               </Reveal>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BLOCK 5 — REVIEWS WALL */}
+      <section className="relative py-20 sm:py-28 px-5 overflow-hidden bg-secondary/20">
+        <div className="absolute inset-0 grid-lines opacity-40" />
+        <div className="absolute top-0 right-1/4 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[130px]" />
+        <div className="relative max-w-6xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <div className="flex justify-center gap-1 mb-4">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Icon key={i} name="Star" size={22} className="text-primary fill-primary" />
+              ))}
+            </div>
+            <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase">
+              Что говорят те, кто уже <span className="text-gradient">прошёл курс</span>
+            </h2>
+          </Reveal>
+
+          {/* Masonry wall */}
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 [&>*]:mb-5">
+            {reviews.map((r, i) => (
+              <Reveal key={r.name} delay={i * 120} className="break-inside-avoid">
+                <div className="rounded-2xl border border-border bg-card p-6 hover:border-primary/50 transition-colors">
+                  <div className="flex gap-0.5 mb-4">
+                    {Array.from({ length: 5 }).map((_, s) => (
+                      <Icon key={s} name="Star" size={16} className="text-primary fill-primary" />
+                    ))}
+                  </div>
+                  <p className="text-foreground/90 leading-relaxed mb-5 italic">«{r.text}»</p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-border">
+                    <div className="grid place-items-center w-10 h-10 rounded-full bg-primary/15 border border-primary/25 font-display font-bold text-primary shrink-0">
+                      {r.name.charAt(0)}
+                    </div>
+                    <div>
+                      <div className="font-semibold leading-tight">{r.name}</div>
+                      <div className="text-sm text-muted-foreground">{r.role}</div>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
