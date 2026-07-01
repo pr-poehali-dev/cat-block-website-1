@@ -13,6 +13,70 @@ const bullets = [
   'Поддержка мастера после обучения в Telegram-чате',
 ];
 
+const modules = [
+  {
+    icon: 'GraduationCap',
+    tag: 'Модуль 1',
+    duration: '2 дня',
+    title: 'Теория, которая реально нужна',
+    items: [
+      'Принцип работы холодильного цикла простым языком',
+      'Все компоненты системы: компрессор, конденсатор, испаритель, ТРВ, осушитель',
+      'Хладагенты R134a и R1234yf: отличия, особенности, меры безопасности',
+      'Типичные неисправности и их логика',
+    ],
+  },
+  {
+    icon: 'Microscope',
+    tag: 'Модуль 2',
+    duration: '3 дня',
+    title: 'Диагностика',
+    items: [
+      'Диагностика по манометрам: что значат показания давления',
+      'Компьютерная диагностика сканером',
+      'Поиск утечек: электронный течеискатель и UV-метод',
+      'Разбор 10 реальных кейсов из практики',
+    ],
+  },
+  {
+    icon: 'Wrench',
+    tag: 'Модуль 3',
+    duration: '3 дня',
+    title: 'Обслуживание и заправка',
+    items: [
+      'Вакуумирование системы: почему это критически важно',
+      'Заправка по весу и через смотровое стекло',
+      'Учёт масла при дозаправке',
+      'Промывка системы после замены компрессора',
+      'Работа с заправочными станциями: ручные и автоматические',
+    ],
+  },
+  {
+    icon: 'Cog',
+    tag: 'Модуль 4',
+    duration: '4 дня',
+    title: 'Ремонт',
+    items: [
+      'Замена компрессора: пошагово на конкретной машине',
+      'Замена осушителя, конденсатора, ТРВ',
+      'Ремонт электрической части: муфта, датчики давления, реле',
+      'Особенности японских авто: Toyota, Honda, Nissan, Mazda, Mitsubishi',
+      'Разбор сложных случаев — плавающие утечки, компрессор «клинит»',
+    ],
+  },
+  {
+    icon: 'Award',
+    tag: 'Финал',
+    duration: '2 дня',
+    title: 'Аттестация',
+    items: [
+      'Самостоятельная диагностика авто под наблюдением мастера',
+      'Разбор ошибок, итоговое тестирование',
+      'Выдача сертификата',
+    ],
+  },
+];
+
 const pains = [
   {
     icon: 'Wrench',
@@ -153,6 +217,63 @@ const Index = () => {
               </p>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* BLOCK 3 — PROGRAM */}
+      <section className="relative py-20 sm:py-28 px-5 overflow-hidden bg-secondary/20">
+        <div className="absolute inset-0 grid-lines opacity-40" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[130px]" />
+        <div className="relative max-w-5xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/40 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-5">
+              <Icon name="ListChecks" size={16} /> Программа
+            </span>
+            <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase">
+              Что ты освоишь за <span className="text-gradient">2 недели</span>
+            </h2>
+          </Reveal>
+
+          <div className="relative">
+            {/* timeline line */}
+            <div className="hidden sm:block absolute left-[27px] top-4 bottom-4 w-px bg-gradient-to-b from-primary/60 via-border to-transparent" />
+
+            <div className="space-y-5">
+              {modules.map((m, i) => (
+                <Reveal
+                  key={m.tag}
+                  delay={i * 100}
+                  className="relative sm:pl-20"
+                >
+                  {/* timeline node */}
+                  <div className="hidden sm:grid place-items-center absolute left-0 top-6 w-14 h-14 rounded-2xl bg-primary glow-blue z-10">
+                    <Icon name={m.icon} size={26} className="text-primary-foreground" />
+                  </div>
+
+                  <div className="rounded-2xl border border-border bg-card p-6 sm:p-7 hover:border-primary/50 transition-colors">
+                    <div className="flex flex-wrap items-center gap-3 mb-4">
+                      <div className="sm:hidden grid place-items-center w-11 h-11 rounded-xl bg-primary glow-blue shrink-0">
+                        <Icon name={m.icon} size={22} className="text-primary-foreground" />
+                      </div>
+                      <span className="font-display text-sm font-semibold uppercase tracking-wider text-primary">{m.tag}</span>
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary border border-border text-xs text-muted-foreground">
+                        <Icon name="Clock" size={13} /> {m.duration}
+                      </span>
+                    </div>
+                    <h3 className="font-display text-xl sm:text-2xl font-semibold uppercase mb-4">{m.title}</h3>
+                    <ul className="space-y-2.5">
+                      {m.items.map((it) => (
+                        <li key={it} className="flex items-start gap-3">
+                          <Icon name="ChevronRight" size={18} className="text-primary shrink-0 mt-0.5" />
+                          <span className="text-muted-foreground leading-relaxed">{it}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
