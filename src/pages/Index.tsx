@@ -1,5 +1,10 @@
+import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { toast } from 'sonner';
 import Reveal from '@/components/Reveal';
 
 const heroImg =
@@ -12,6 +17,38 @@ const masterFacts = [
   { icon: 'Wrench', value: '7 лет', label: 'в специализации' },
   { icon: 'GraduationCap', value: '40+', label: 'обученных специалистов' },
   { icon: 'Star', value: '4.9', label: 'рейтинг на 2ГИС' },
+];
+
+const courseInfo = [
+  { icon: 'Calendar', label: 'Ближайший поток', value: '14 июля 2026' },
+  { icon: 'MapPin', label: 'Место', value: 'Уссурийск, ул. [адрес сервиса]' },
+  { icon: 'Users', label: 'Группа', value: 'до 6 человек' },
+  { icon: 'Clock', label: 'Длительность', value: '2 недели, пн–пт, 10:00–16:00' },
+  { icon: 'Wallet', label: 'Стоимость', value: '18 900 ₽ (рассрочка доступна)' },
+  { icon: 'Gift', label: 'Бонус при записи', value: 'чек-лист «50 неисправностей автокондиционера»' },
+];
+
+const faq = [
+  {
+    q: 'Нужен ли опыт в авторемонте?',
+    a: 'Базовый опыт работы с автомобилями нужен — курс не для полных новичков. Но специального опыта с кондиционерами не требуется — обучаем с нуля.',
+  },
+  {
+    q: 'Что нужно иметь с собой?',
+    a: 'Ничего — всё оборудование, инструменты и автомобили предоставляем мы. Приходи в рабочей одежде.',
+  },
+  {
+    q: 'Дадут ли документ об обучении?',
+    a: 'Да. По итогу выдаём именной сертификат о прохождении курса.',
+  },
+  {
+    q: 'Можно ли оплатить частями?',
+    a: 'Да. Первый взнос 30% при записи, остаток до начала обучения. Свяжитесь с нами — обсудим удобный для вас формат.',
+  },
+  {
+    q: 'Вы работаете только с японскими авто?',
+    a: 'На курсе акцент на японские автомобили, так как они составляют 80%+ парка в Приморье. Принципы диагностики универсальны — применимы к любым маркам.',
+  },
 ];
 
 const reviews = [
@@ -128,6 +165,22 @@ const pains = [
 ];
 
 const Index = () => {
+  const [form, setForm] = useState({ name: '', phone: '', experience: '' });
+
+  const scrollToForm = () => {
+    document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.phone.trim()) {
+      toast.error('Заполните имя и телефон');
+      return;
+    }
+    toast.success('Заявка отправлена! Перезвоним в течение 30 минут.');
+    setForm({ name: '', phone: '', experience: '' });
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* HERO */}
@@ -191,7 +244,7 @@ const Index = () => {
             </ul>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-3">
-              <Button size="lg" className="h-14 px-8 text-base font-semibold rounded-lg glow-blue hover:scale-[1.03] transition-transform">
+              <Button size="lg" onClick={scrollToForm} className="h-14 px-8 text-base font-semibold rounded-lg glow-blue hover:scale-[1.03] transition-transform">
                 <Icon name="Zap" size={20} /> Записаться на курс
               </Button>
               <span className="inline-flex items-center gap-2 text-sm text-accent font-semibold">
@@ -416,9 +469,132 @@ const Index = () => {
         </div>
       </section>
 
+      {/* BLOCK 6 — CTA FORM */}
+      <section id="signup" className="relative py-20 sm:py-28 px-5 overflow-hidden scroll-mt-16">
+        <div className="absolute inset-0 grid-lines opacity-40" />
+        <div className="absolute -top-20 left-0 w-[500px] h-[500px] rounded-full bg-primary/15 blur-[130px]" />
+        <div className="relative max-w-6xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/40 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-5">
+              <Icon name="Flame" size={16} /> Осталось 3 места
+            </span>
+            <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase">
+              Запишись на курс — осталось 3 места в <span className="text-gradient">июле</span>
+            </h2>
+          </Reveal>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+            {/* Info panel */}
+            <Reveal className="flex">
+              <div className="w-full rounded-2xl border border-border bg-card p-7 sm:p-8">
+                <div className="space-y-1">
+                  {courseInfo.map((c, i) => (
+                    <div
+                      key={c.label}
+                      className={`flex items-start gap-4 py-4 ${i < courseInfo.length - 1 ? 'border-b border-border' : ''}`}
+                    >
+                      <div className="grid place-items-center w-11 h-11 rounded-xl bg-primary/10 border border-primary/25 shrink-0">
+                        <Icon name={c.icon} size={22} className="text-primary" />
+                      </div>
+                      <div>
+                        <div className="text-sm text-muted-foreground">{c.label}</div>
+                        <div className="font-semibold leading-snug">{c.value}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Form */}
+            <Reveal delay={120} className="flex">
+              <form onSubmit={submit} className="w-full rounded-2xl border border-primary/40 bg-card p-7 sm:p-8 glow-blue flex flex-col">
+                <h3 className="font-display text-2xl font-semibold uppercase mb-6">Заявка на курс</h3>
+                <div className="space-y-4 flex-1">
+                  <Input
+                    placeholder="Ваше имя"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="h-13 bg-background border-border text-base"
+                  />
+                  <Input
+                    type="tel"
+                    placeholder="Номер телефона"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    className="h-13 bg-background border-border text-base"
+                  />
+                  <Select value={form.experience} onValueChange={(v) => setForm({ ...form, experience: v })}>
+                    <SelectTrigger className="h-13 bg-background border-border text-base">
+                      <SelectValue placeholder="Ваш опыт в авторемонте" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Начинающий">Начинающий</SelectItem>
+                      <SelectItem value="Механик">Механик</SelectItem>
+                      <SelectItem value="Владелец СТО">Владелец СТО</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button type="submit" size="lg" className="w-full h-14 mt-6 text-base font-semibold rounded-lg glow-blue hover:scale-[1.02] transition-transform">
+                  <Icon name="Zap" size={20} /> Записаться на курс
+                </Button>
+                <p className="flex items-start gap-2 text-sm text-muted-foreground mt-4">
+                  <Icon name="Lock" size={15} className="text-primary shrink-0 mt-0.5" />
+                  Перезвоним в течение 30 минут в рабочее время. Без спама. Никаких скрытых платежей.
+                </p>
+              </form>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="relative py-20 sm:py-28 px-5 overflow-hidden bg-secondary/20">
+        <div className="relative max-w-3xl mx-auto">
+          <Reveal className="text-center mb-12">
+            <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase">
+              Часто задаваемые <span className="text-gradient">вопросы</span>
+            </h2>
+          </Reveal>
+          <Reveal>
+            <Accordion type="single" collapsible className="space-y-3">
+              {faq.map((f, i) => (
+                <AccordionItem
+                  key={f.q}
+                  value={`item-${i}`}
+                  className="rounded-xl border border-border bg-card px-5 data-[state=open]:border-primary/50"
+                >
+                  <AccordionTrigger className="text-left font-semibold hover:no-underline py-5">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5">
+                    {f.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="relative py-10 px-5 border-t border-border text-center pb-24 sm:pb-10">
+        <div className="flex items-center justify-center gap-2.5 mb-3">
+          <div className="grid place-items-center w-9 h-9 rounded-lg bg-primary">
+            <Icon name="Snowflake" size={20} className="text-primary-foreground" />
+          </div>
+          <span className="font-display text-lg font-bold uppercase tracking-wide">
+            Авто<span className="text-primary">Климат</span>
+          </span>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Курс по диагностике и ремонту автокондиционеров · Уссурийск · © 2026
+        </p>
+      </footer>
+
       {/* MOBILE FIXED CTA */}
       <div className="sm:hidden fixed bottom-0 inset-x-0 z-50 p-3 bg-background/90 backdrop-blur-lg border-t border-border">
-        <Button className="w-full h-13 py-4 text-base font-semibold rounded-lg glow-blue">
+        <Button onClick={scrollToForm} className="w-full h-13 py-4 text-base font-semibold rounded-lg glow-blue">
           <Icon name="Zap" size={20} /> Записаться на курс
         </Button>
       </div>
