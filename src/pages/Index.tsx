@@ -1,5 +1,6 @@
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
+import Reveal from '@/components/Reveal';
 
 const heroImg =
   'https://cdn.poehali.dev/projects/34dff7d9-fdbd-40df-a59d-077a0bd10df2/files/1b9c4ef9-db4b-4420-9d3c-bf6dfd104656.jpg';
@@ -10,6 +11,29 @@ const bullets = [
   'Работа с R134a и R1234yf (современные японские авто)',
   'Сертификат по окончании курса',
   'Поддержка мастера после обучения в Telegram-чате',
+];
+
+const pains = [
+  {
+    icon: 'Wrench',
+    title: '«Кондиционеры — это деньги, а я теряю клиентов»',
+    text: 'Летом очередь из машин с неработающим кондиционером, а ты отправляешь их к конкурентам — потому что не уверен в своих знаниях.',
+  },
+  {
+    icon: 'BookOpen',
+    title: '«Смотрел видео, читал форумы — но всё равно не понятно»',
+    text: 'YouTube-уроки дают общее представление, но не отвечают на вопрос: «А что конкретно делать с этой машиной прямо сейчас?»',
+  },
+  {
+    icon: 'CircleDollarSign',
+    title: '«Страшно брать в работу — вдруг сделаю хуже»',
+    text: 'Боишься навредить клиентской машине, потерять репутацию и заплатить из своего кармана.',
+  },
+  {
+    icon: 'Thermometer',
+    title: '«R1234yf, новые гибриды Toyota — вообще тёмный лес»',
+    text: 'Старые знания не работают с новыми автомобилями. Каждый год выходят машины с другими системами, и ты не знаешь, как к ним подходить.',
+  },
 ];
 
 const Index = () => {
@@ -93,6 +117,42 @@ const Index = () => {
         {/* Scroll hint */}
         <div className="hidden sm:block absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-muted-foreground animate-bounce">
           <Icon name="ChevronDown" size={28} />
+        </div>
+      </section>
+
+      {/* BLOCK 2 — PAINS */}
+      <section className="relative py-20 sm:py-28 px-5 overflow-hidden">
+        <div className="absolute top-1/4 -left-32 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[130px]" />
+        <div className="relative max-w-6xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase">
+              Узнаёшь <span className="text-gradient">себя?</span>
+            </h2>
+          </Reveal>
+
+          <div className="grid sm:grid-cols-2 gap-5">
+            {pains.map((p, i) => (
+              <Reveal
+                key={p.title}
+                delay={i * 120}
+                className="group relative rounded-2xl border border-border bg-card p-7 hover:border-primary/50 transition-colors"
+              >
+                <div className="grid place-items-center w-12 h-12 rounded-xl bg-primary/10 border border-primary/25 mb-5 group-hover:scale-110 transition-transform">
+                  <Icon name={p.icon} size={24} className="text-primary" />
+                </div>
+                <h3 className="font-display text-lg font-semibold mb-3 leading-snug">{p.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{p.text}</p>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={200} className="mt-12">
+            <div className="relative rounded-2xl border border-primary/40 bg-primary/10 p-7 sm:p-9 text-center">
+              <p className="text-lg sm:text-xl text-foreground leading-relaxed max-w-3xl mx-auto">
+                Именно для тех, кто уже умеет держать инструмент, но хочет освоить автокондиционеры <span className="text-primary font-semibold">системно и практически</span> — создан этот курс.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
