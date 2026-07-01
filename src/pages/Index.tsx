@@ -4,6 +4,15 @@ import Reveal from '@/components/Reveal';
 
 const heroImg =
   'https://cdn.poehali.dev/projects/34dff7d9-fdbd-40df-a59d-077a0bd10df2/files/1b9c4ef9-db4b-4420-9d3c-bf6dfd104656.jpg';
+const masterImg =
+  'https://cdn.poehali.dev/projects/34dff7d9-fdbd-40df-a59d-077a0bd10df2/files/4343666c-ed3d-49f1-9dec-734045e35855.jpg';
+
+const masterFacts = [
+  { icon: 'Car', value: '1 200+', label: 'автомобилей с кондиционерами' },
+  { icon: 'Wrench', value: '7 лет', label: 'в специализации' },
+  { icon: 'GraduationCap', value: '40+', label: 'обученных специалистов' },
+  { icon: 'Star', value: '4.9', label: 'рейтинг на 2ГИС' },
+];
 
 const bullets = [
   '2 недели интенсивной практики на реальных авто',
@@ -272,6 +281,75 @@ const Index = () => {
                   </div>
                 </Reveal>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BLOCK 4 — MASTER */}
+      <section className="relative py-20 sm:py-28 px-5 overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[130px]" />
+        <div className="relative max-w-6xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase">
+              Кто ведёт <span className="text-gradient">курс</span>
+            </h2>
+          </Reveal>
+
+          <div className="grid lg:grid-cols-[minmax(0,340px)_1fr] gap-8 lg:gap-12 items-start">
+            {/* Photo */}
+            <Reveal className="relative">
+              <div className="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-primary/40 to-transparent blur-xl" />
+              <div className="relative rounded-3xl overflow-hidden border border-border glow-blue">
+                <img src={masterImg} alt="Мастер курса" className="w-full aspect-[4/5] object-cover" />
+                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-background to-transparent">
+                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                    <Icon name="BadgeCheck" size={16} /> Мастер · 7 лет опыта
+                  </span>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Text + facts */}
+            <div>
+              <Reveal>
+                <p className="text-lg text-foreground/90 leading-relaxed mb-5">
+                  <span className="font-semibold">[Имя мастера]</span> — владелец автосервиса в Уссурийске, 7 лет специализируется на диагностике и ремонте систем кондиционирования японских автомобилей.
+                </p>
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  За это время через мастерскую прошло более 1 200 автомобилей с неисправными кондиционерами. Работает с R134a, R1234yf, гибридными системами Toyota, Lexus, Honda.
+                </p>
+              </Reveal>
+
+              {/* Facts table */}
+              <Reveal delay={120}>
+                <div className="grid sm:grid-cols-2 rounded-2xl border border-border overflow-hidden mb-8">
+                  {masterFacts.map((f, i) => (
+                    <div
+                      key={f.label}
+                      className={`flex items-center gap-4 p-5 bg-card ${i % 2 === 0 ? 'sm:border-r' : ''} ${i < 2 ? 'border-b' : ''} border-border`}
+                    >
+                      <div className="grid place-items-center w-12 h-12 rounded-xl bg-primary/10 border border-primary/25 shrink-0">
+                        <Icon name={f.icon} size={24} className="text-primary" />
+                      </div>
+                      <div>
+                        <div className="font-display text-2xl font-bold leading-none">{f.value}</div>
+                        <div className="text-sm text-muted-foreground mt-1">{f.label}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
+
+              {/* Quote */}
+              <Reveal delay={200}>
+                <blockquote className="relative rounded-2xl border-l-4 border-primary bg-primary/5 p-6 sm:p-7">
+                  <Icon name="Quote" size={32} className="text-primary/30 mb-2" />
+                  <p className="text-lg text-foreground italic leading-relaxed">
+                    «Я сам учился по видосам и форумам — и знаю, как это больно. Три года ошибок, прежде чем всё встало на место. На курсе я даю ту систему, которой мне так не хватало в начале.»
+                  </p>
+                </blockquote>
+              </Reveal>
             </div>
           </div>
         </div>
