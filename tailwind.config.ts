@@ -19,8 +19,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				display: ['Pacifico', 'cursive'],
-				sans: ['Rubik', 'sans-serif'],
+				display: ['Oswald', 'sans-serif'],
+				sans: ['IBM Plex Sans', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

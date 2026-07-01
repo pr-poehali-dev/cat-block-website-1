@@ -1,235 +1,96 @@
-import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 
-const cats = [
-  {
-    url: 'https://cdn.poehali.dev/projects/34dff7d9-fdbd-40df-a59d-077a0bd10df2/files/35460c54-5ae5-4457-a04f-27cde5f35517.jpg',
-    name: 'Рыжик',
-    desc: 'Солнечный проказник с зелёными глазами',
-  },
-  {
-    url: 'https://cdn.poehali.dev/projects/34dff7d9-fdbd-40df-a59d-077a0bd10df2/files/2004bbcf-8cd5-400b-96c9-cfb0a09ae445.jpg',
-    name: 'Дымок',
-    desc: 'Британский плюшевый мечтатель',
-  },
-  {
-    url: 'https://cdn.poehali.dev/projects/34dff7d9-fdbd-40df-a59d-077a0bd10df2/files/56b55c08-a44a-4737-b36a-a0a3488fcb2e.jpg',
-    name: 'Соня',
-    desc: 'Любит уют, плед и подремать',
-  },
-];
-
-const navLinks = [
-  { id: 'home', label: 'Главная' },
-  { id: 'gallery', label: 'Галерея' },
-  { id: 'about', label: 'О сайте' },
-  { id: 'contacts', label: 'Контакты' },
-];
+const heroImg =
+  'https://cdn.poehali.dev/projects/34dff7d9-fdbd-40df-a59d-077a0bd10df2/files/1b9c4ef9-db4b-4420-9d3c-bf6dfd104656.jpg';
 
 const Index = () => {
-  const [active, setActive] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActive((p) => (p + 1) % cats.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const scrollTo = (id: string) => {
-    setMenuOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <div className="min-h-screen bg-mesh overflow-x-hidden">
-      {/* NAV */}
-      <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-white/60 border-b border-white/40">
-        <nav className="max-w-6xl mx-auto flex items-center justify-between px-5 py-4">
-          <button onClick={() => scrollTo('home')} className="flex items-center gap-2 group">
-            <span className="text-3xl transition-transform group-hover:rotate-12">🐱</span>
-            <span className="font-display text-2xl text-gradient">МУР</span>
-          </button>
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((l) => (
-              <button
-                key={l.id}
-                onClick={() => scrollTo(l.id)}
-                className="px-4 py-2 rounded-full text-sm font-semibold text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors"
-              >
-                {l.label}
-              </button>
-            ))}
-            <Button onClick={() => scrollTo('gallery')} className="ml-2 rounded-full font-bold">
-              Смотреть котиков
-            </Button>
-          </div>
-          <button className="md:hidden text-foreground" onClick={() => setMenuOpen(!menuOpen)}>
-            <Icon name={menuOpen ? 'X' : 'Menu'} size={28} />
-          </button>
-        </nav>
-        {menuOpen && (
-          <div className="md:hidden px-5 pb-4 flex flex-col gap-1 animate-fade-in">
-            {navLinks.map((l) => (
-              <button
-                key={l.id}
-                onClick={() => scrollTo(l.id)}
-                className="text-left px-4 py-3 rounded-2xl font-semibold hover:bg-primary/10"
-              >
-                {l.label}
-              </button>
-            ))}
-          </div>
-        )}
-      </header>
-
+    <div className="min-h-screen bg-background text-foreground">
       {/* HERO */}
-      <section id="home" className="relative pt-36 pb-20 px-5">
-        <div className="absolute top-24 -left-10 text-[120px] opacity-20 animate-float select-none">🐾</div>
-        <div className="absolute bottom-10 right-4 text-[90px] opacity-20 animate-float select-none" style={{ animationDelay: '2s' }}>🐾</div>
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="animate-fade-in">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-bold text-sm mb-6">
-              <Icon name="Sparkles" size={16} /> Самые милые пушистики
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img src={heroImg} alt="Мастер за работой" className="w-full h-full object-cover scale-105 blur-sm" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
+        </div>
+        {/* Tech grid overlay */}
+        <div className="absolute inset-0 grid-lines opacity-60" />
+        {/* Blue glow */}
+        <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px]" />
+
+        {/* Nav */}
+        <header className="absolute top-0 inset-x-0 z-20">
+          <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-6">
+            <div className="flex items-center gap-2.5">
+              <div className="grid place-items-center w-10 h-10 rounded-lg bg-primary glow-blue">
+                <Icon name="Snowflake" size={22} className="text-primary-foreground" />
+              </div>
+              <span className="font-display text-xl font-bold uppercase tracking-wide">
+                Авто<span className="text-primary">Климат</span>
+              </span>
+            </div>
+            <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+              <Icon name="MapPin" size={16} className="text-primary" /> Уссурийск
+            </div>
+          </div>
+        </header>
+
+        {/* Content */}
+        <div className="relative z-10 max-w-6xl mx-auto px-5 py-32 w-full">
+          <div className="max-w-2xl">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/40 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              </span>
+              Практический курс · Уссурийск
             </span>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl leading-tight mb-6">
-              Мир, где живут <span className="text-gradient">котики</span>
+
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold uppercase leading-[0.95] mb-6">
+              Диагностика и ремонт
+              <span className="block text-gradient">автокондиционеров</span>
             </h1>
-            <p className="text-lg text-foreground/70 mb-8 max-w-md">
-              Уютная галерея с автоматическим слайдшоу самых обаятельных котов. Заряжайся мурчащим настроением!
+
+            <p className="text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed">
+              Освой востребованную профессию с нуля. Работа с манометрической станцией, поиск утечек, заправка и ремонт систем кондиционирования — на реальных автомобилях.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Button size="lg" onClick={() => scrollTo('gallery')} className="rounded-full font-bold text-base h-14 px-8">
-                <Icon name="Images" size={20} /> Открыть галерею
+
+            <div className="flex flex-wrap gap-4 mb-12">
+              <Button size="lg" className="h-14 px-8 text-base font-semibold rounded-lg glow-blue hover:scale-[1.03] transition-transform">
+                <Icon name="Zap" size={20} /> Записаться на курс
               </Button>
-              <Button size="lg" variant="outline" onClick={() => scrollTo('about')} className="rounded-full font-bold text-base h-14 px-8 border-2">
-                О сайте
+              <Button size="lg" variant="outline" className="h-14 px-8 text-base font-semibold rounded-lg border-2 border-border bg-secondary/40 hover:bg-secondary">
+                Программа курса
               </Button>
             </div>
-          </div>
 
-          {/* SLIDESHOW */}
-          <div className="relative animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <div className="absolute -inset-4 bg-gradient-to-tr from-primary via-secondary to-accent rounded-[2.5rem] blur-2xl opacity-40 animate-slow-spin" />
-            <div className="relative aspect-square rounded-[2rem] overflow-hidden shadow-2xl ring-4 ring-white">
-              {cats.map((cat, i) => (
-                <div
-                  key={cat.name}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${i === active ? 'opacity-100' : 'opacity-0'}`}
-                >
-                  <img
-                    src={cat.url}
-                    alt={cat.name}
-                    className={`w-full h-full object-cover ${i === active ? 'animate-ken-burns' : ''}`}
-                  />
-                  <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/70 to-transparent">
-                    <p className="font-display text-3xl text-white">{cat.name}</p>
-                    <p className="text-white/80 text-sm">{cat.desc}</p>
+            <div className="flex flex-wrap gap-8">
+              {[
+                { icon: 'Gauge', value: 'Практика', label: 'на реальном оборудовании' },
+                { icon: 'Award', value: 'Сертификат', label: 'по итогам обучения' },
+                { icon: 'Wallet', value: 'от 60 000 ₽', label: 'средний доход мастера' },
+              ].map((s) => (
+                <div key={s.value} className="flex items-center gap-3">
+                  <div className="grid place-items-center w-11 h-11 rounded-lg bg-secondary border border-border">
+                    <Icon name={s.icon} size={20} className="text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-display text-lg font-semibold uppercase leading-none">{s.value}</div>
+                    <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="flex justify-center gap-2 mt-5">
-              {cats.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActive(i)}
-                  className={`h-2.5 rounded-full transition-all ${i === active ? 'w-8 bg-primary' : 'w-2.5 bg-primary/30'}`}
-                />
-              ))}
-            </div>
           </div>
         </div>
-      </section>
 
-      {/* GALLERY */}
-      <section id="gallery" className="py-20 px-5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="font-display text-4xl sm:text-5xl mb-3">Наша <span className="text-gradient">галерея</span></h2>
-            <p className="text-foreground/60 text-lg">Знакомьтесь с нашими пушистыми звёздами</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cats.map((cat, i) => (
-              <div
-                key={cat.name}
-                className="group relative rounded-[1.75rem] overflow-hidden shadow-lg bg-white ring-1 ring-black/5 hover:-translate-y-2 transition-transform duration-300 animate-fade-in"
-                style={{ animationDelay: `${i * 0.1}s` }}
-              >
-                <div className="aspect-[4/5] overflow-hidden">
-                  <img src={cat.url} alt={cat.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                </div>
-                <div className="p-5">
-                  <div className="flex items-center justify-between">
-                    <p className="font-display text-2xl text-gradient">{cat.name}</p>
-                    <span className="text-2xl">😻</span>
-                  </div>
-                  <p className="text-foreground/60 text-sm mt-1">{cat.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Scroll hint */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-muted-foreground animate-bounce">
+          <Icon name="ChevronDown" size={28} />
         </div>
       </section>
-
-      {/* ABOUT */}
-      <section id="about" className="py-20 px-5">
-        <div className="max-w-5xl mx-auto rounded-[2.5rem] bg-gradient-to-br from-primary to-secondary p-1 shadow-2xl">
-          <div className="rounded-[2.25rem] bg-white p-10 sm:p-14">
-            <div className="grid sm:grid-cols-2 gap-10 items-center">
-              <div>
-                <h2 className="font-display text-4xl sm:text-5xl mb-5">О <span className="text-gradient">сайте</span></h2>
-                <p className="text-foreground/70 text-lg leading-relaxed">
-                  МУР — это уголок тепла и умиления в интернете. Мы собираем самых милых котиков и показываем их в красивом слайдшоу, чтобы каждый твой день начинался с улыбки.
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { icon: 'Heart', label: 'Сделано с любовью' },
-                  { icon: 'Camera', label: 'Живые фото' },
-                  { icon: 'Zap', label: 'Автослайдшоу' },
-                  { icon: 'Smile', label: 'Заряд позитива' },
-                ].map((f) => (
-                  <div key={f.label} className="rounded-2xl bg-muted p-5 text-center">
-                    <div className="inline-flex p-3 rounded-xl bg-primary/10 text-primary mb-2">
-                      <Icon name={f.icon} size={24} />
-                    </div>
-                    <p className="font-semibold text-sm">{f.label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CONTACTS */}
-      <section id="contacts" className="py-20 px-5">
-        <div className="max-w-3xl mx-auto text-center">
-          <span className="text-5xl">📮</span>
-          <h2 className="font-display text-4xl sm:text-5xl mt-4 mb-3">Напиши <span className="text-gradient">нам</span></h2>
-          <p className="text-foreground/60 text-lg mb-8">Есть котик-кандидат в галерею? Будем рады!</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a href="mailto:hello@mur.cat" className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-white shadow-lg ring-1 ring-black/5 font-semibold hover:-translate-y-1 transition-transform">
-              <Icon name="Mail" size={20} className="text-primary" /> hello@mur.cat
-            </a>
-            <a href="#" className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-white shadow-lg ring-1 ring-black/5 font-semibold hover:-translate-y-1 transition-transform">
-              <Icon name="Send" size={20} className="text-secondary" /> Telegram
-            </a>
-            <a href="#" className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-white shadow-lg ring-1 ring-black/5 font-semibold hover:-translate-y-1 transition-transform">
-              <Icon name="Instagram" size={20} className="text-accent" /> Instagram
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="py-10 px-5 text-center">
-        <p className="font-display text-2xl text-gradient mb-1">МУР 🐾</p>
-        <p className="text-foreground/50 text-sm">© 2026 · Сделано с мурчанием и любовью</p>
-      </footer>
     </div>
   );
 };
