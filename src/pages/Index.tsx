@@ -4,6 +4,14 @@ import { Button } from '@/components/ui/button';
 const heroImg =
   'https://cdn.poehali.dev/projects/34dff7d9-fdbd-40df-a59d-077a0bd10df2/files/1b9c4ef9-db4b-4420-9d3c-bf6dfd104656.jpg';
 
+const bullets = [
+  '2 недели интенсивной практики на реальных авто',
+  'Группа до 6 человек — внимание каждому',
+  'Работа с R134a и R1234yf (современные японские авто)',
+  'Сертификат по окончании курса',
+  'Поддержка мастера после обучения в Telegram-чате',
+];
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -38,7 +46,7 @@ const Index = () => {
         </header>
 
         {/* Content */}
-        <div className="relative z-10 max-w-6xl mx-auto px-5 py-32 w-full">
+        <div className="relative z-10 max-w-6xl mx-auto px-5 pt-28 pb-32 sm:py-32 w-full">
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/40 bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-6">
               <span className="relative flex h-2 w-2">
@@ -48,49 +56,52 @@ const Index = () => {
               Практический курс · Уссурийск
             </span>
 
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold uppercase leading-[0.95] mb-6">
-              Диагностика и ремонт
-              <span className="block text-gradient">автокондиционеров</span>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold uppercase leading-[1.02] mb-6">
+              Научись диагностировать и ремонтировать <span className="text-gradient">автокондиционеры</span> — и зарабатывай уже через 2 недели
             </h1>
 
             <p className="text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed">
-              Освой востребованную профессию с нуля. Работа с манометрической станцией, поиск утечек, заправка и ремонт систем кондиционирования — на реальных автомобилях.
+              Практический курс в Уссурийске от мастера с 7-летним опытом. Работаем с японскими авто, учим на реальных машинах — без воды и теории ради теории.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
+            <ul className="space-y-3 mb-8">
+              {bullets.map((b) => (
+                <li key={b} className="flex items-start gap-3">
+                  <div className="grid place-items-center w-6 h-6 rounded-md bg-primary/15 border border-primary/30 shrink-0 mt-0.5">
+                    <Icon name="Check" size={15} className="text-primary" />
+                  </div>
+                  <span className="text-foreground/90">{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-3">
               <Button size="lg" className="h-14 px-8 text-base font-semibold rounded-lg glow-blue hover:scale-[1.03] transition-transform">
                 <Icon name="Zap" size={20} /> Записаться на курс
               </Button>
-              <Button size="lg" variant="outline" className="h-14 px-8 text-base font-semibold rounded-lg border-2 border-border bg-secondary/40 hover:bg-secondary">
-                Программа курса
-              </Button>
+              <span className="inline-flex items-center gap-2 text-sm text-accent font-semibold">
+                <Icon name="Flame" size={16} className="text-primary" />
+                Осталось 3 места в июльском потоке
+              </span>
             </div>
-
-            <div className="flex flex-wrap gap-8">
-              {[
-                { icon: 'Gauge', value: 'Практика', label: 'на реальном оборудовании' },
-                { icon: 'Award', value: 'Сертификат', label: 'по итогам обучения' },
-                { icon: 'Wallet', value: 'от 60 000 ₽', label: 'средний доход мастера' },
-              ].map((s) => (
-                <div key={s.value} className="flex items-center gap-3">
-                  <div className="grid place-items-center w-11 h-11 rounded-lg bg-secondary border border-border">
-                    <Icon name={s.icon} size={20} className="text-primary" />
-                  </div>
-                  <div>
-                    <div className="font-display text-lg font-semibold uppercase leading-none">{s.value}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <p className="text-sm text-muted-foreground">
+              Перезвоним в течение 30 минут. Без спама и навязчивых продаж.
+            </p>
           </div>
         </div>
 
         {/* Scroll hint */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-muted-foreground animate-bounce">
+        <div className="hidden sm:block absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-muted-foreground animate-bounce">
           <Icon name="ChevronDown" size={28} />
         </div>
       </section>
+
+      {/* MOBILE FIXED CTA */}
+      <div className="sm:hidden fixed bottom-0 inset-x-0 z-50 p-3 bg-background/90 backdrop-blur-lg border-t border-border">
+        <Button className="w-full h-13 py-4 text-base font-semibold rounded-lg glow-blue">
+          <Icon name="Zap" size={20} /> Записаться на курс
+        </Button>
+      </div>
     </div>
   );
 };
