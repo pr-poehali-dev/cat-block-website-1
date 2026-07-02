@@ -167,6 +167,7 @@ const pains = [
 
 const Index = () => {
   const [form, setForm] = useState({ name: '', phone: '', experience: '' });
+  const [agreed, setAgreed] = useState(false);
   const [sending, setSending] = useState(false);
 
   const scrollToForm = () => {
@@ -179,6 +180,10 @@ const Index = () => {
       toast.error('Заполните имя и телефон');
       return;
     }
+    if (!agreed) {
+      toast.error('Подтвердите согласие на обработку персональных данных');
+      return;
+    }
     setSending(true);
     try {
       const res = await fetch('https://functions.poehali.dev/0410b133-5131-41be-8049-d1753e029a71', {
@@ -189,6 +194,7 @@ const Index = () => {
       if (!res.ok) throw new Error();
       toast.success('Заявка отправлена! Перезвоним в течение 30 минут.');
       setForm({ name: '', phone: '', experience: '' });
+      setAgreed(false);
     } catch {
       toast.error('Не удалось отправить. Попробуйте ещё раз или позвоните нам.');
     } finally {
@@ -550,7 +556,25 @@ const Index = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <Button type="submit" size="lg" disabled={sending} className="w-full h-14 mt-6 text-base font-semibold rounded-lg glow-blue hover:scale-[1.02] transition-transform disabled:opacity-70 disabled:hover:scale-100">
+                <label className="flex items-start gap-2.5 mt-5 cursor-pointer select-none text-sm text-muted-foreground">
+                  <input
+                    type="checkbox"
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-primary cursor-pointer"
+                  />
+                  <span>
+                    Я согласен на обработку персональных данных и принимаю{' '}
+                    <Link
+                      to="/privacy"
+                      target="_blank"
+                      className="text-primary underline underline-offset-2 hover:opacity-80"
+                    >
+                      Политику обработки персональных данных
+                    </Link>
+                  </span>
+                </label>
+                <Button type="submit" size="lg" disabled={sending || !agreed} className="w-full h-14 mt-4 text-base font-semibold rounded-lg glow-blue hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                   <Icon name={sending ? 'Loader2' : 'Zap'} size={20} className={sending ? 'animate-spin' : ''} />
                   {sending ? 'Отправляем...' : 'Записаться на курс'}
                 </Button>
