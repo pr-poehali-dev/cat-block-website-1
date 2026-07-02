@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import { toast } from 'sonner';
 import Reveal from '@/components/Reveal';
 
@@ -425,46 +426,41 @@ const Index = () => {
             </h2>
           </Reveal>
 
-          <div className="relative">
-            {/* timeline line */}
-            <div className="hidden sm:block absolute left-[27px] top-4 bottom-4 w-px bg-gradient-to-b from-primary/60 via-border to-transparent" />
-
-            <div className="space-y-5">
-              {modules.map((m, i) => (
-                <Reveal
-                  key={m.tag}
-                  delay={i * 100}
-                  className="relative sm:pl-20"
-                >
-                  {/* timeline node */}
-                  <div className="hidden sm:grid place-items-center absolute left-0 top-6 w-14 h-14 rounded-2xl bg-primary glow-blue z-10">
-                    <Icon name={m.icon} size={26} className="text-primary-foreground" />
-                  </div>
-
-                  <div className="rounded-2xl border border-border bg-card p-6 sm:p-7 hover:border-primary/50 transition-colors">
-                    <div className="flex flex-wrap items-center gap-3 mb-4">
-                      <div className="sm:hidden grid place-items-center w-11 h-11 rounded-xl bg-primary glow-blue shrink-0">
-                        <Icon name={m.icon} size={22} className="text-primary-foreground" />
+          <Reveal>
+            <Carousel opts={{ align: 'start' }} className="px-0 sm:px-12">
+              <CarouselContent className="-ml-5">
+                {modules.map((m) => (
+                  <CarouselItem key={m.tag} className="pl-5 sm:basis-1/2 lg:basis-1/2">
+                    <div className="h-full rounded-2xl border border-border bg-card p-6 sm:p-7 hover:border-primary/50 transition-colors flex flex-col">
+                      <div className="flex flex-wrap items-center gap-3 mb-4">
+                        <div className="grid place-items-center w-11 h-11 rounded-xl bg-primary glow-blue shrink-0">
+                          <Icon name={m.icon} size={22} className="text-primary-foreground" />
+                        </div>
+                        <span className="font-display text-sm font-semibold uppercase tracking-wider text-primary">{m.tag}</span>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary border border-border text-xs text-muted-foreground">
+                          <Icon name="Clock" size={13} /> {m.duration}
+                        </span>
                       </div>
-                      <span className="font-display text-sm font-semibold uppercase tracking-wider text-primary">{m.tag}</span>
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary border border-border text-xs text-muted-foreground">
-                        <Icon name="Clock" size={13} /> {m.duration}
-                      </span>
+                      <h3 className="font-display text-xl sm:text-2xl font-semibold uppercase mb-4">{m.title}</h3>
+                      <ul className="space-y-2.5">
+                        {m.items.map((it) => (
+                          <li key={it} className="flex items-start gap-3">
+                            <Icon name="ChevronRight" size={18} className="text-primary shrink-0 mt-0.5" />
+                            <span className="text-muted-foreground leading-relaxed">{it}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <h3 className="font-display text-xl sm:text-2xl font-semibold uppercase mb-4">{m.title}</h3>
-                    <ul className="space-y-2.5">
-                      {m.items.map((it) => (
-                        <li key={it} className="flex items-start gap-3">
-                          <Icon name="ChevronRight" size={18} className="text-primary shrink-0 mt-0.5" />
-                          <span className="text-muted-foreground leading-relaxed">{it}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
+            </Carousel>
+            <p className="sm:hidden text-center text-sm text-muted-foreground mt-5 flex items-center justify-center gap-2">
+              <Icon name="MoveHorizontal" size={16} className="text-primary" /> Листайте вбок
+            </p>
+          </Reveal>
         </div>
       </section>
 
@@ -553,30 +549,39 @@ const Index = () => {
             </h2>
           </Reveal>
 
-          {/* Masonry wall */}
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 [&>*]:mb-5">
-            {reviews.map((r, i) => (
-              <Reveal key={r.name} delay={i * 120} className="break-inside-avoid">
-                <div className="rounded-2xl border border-border bg-card p-6 hover:border-primary/50 transition-colors">
-                  <div className="flex gap-0.5 mb-4">
-                    {Array.from({ length: 5 }).map((_, s) => (
-                      <Icon key={s} name="Star" size={16} className="text-primary fill-primary" />
-                    ))}
-                  </div>
-                  <p className="text-foreground/90 leading-relaxed mb-5 italic">«{r.text}»</p>
-                  <div className="flex items-center gap-3 pt-4 border-t border-border">
-                    <div className="grid place-items-center w-10 h-10 rounded-full bg-primary/15 border border-primary/25 font-display font-bold text-primary shrink-0">
-                      {r.name.charAt(0)}
+          {/* Reviews carousel */}
+          <Reveal>
+            <Carousel opts={{ align: 'start', loop: true }} className="px-0 sm:px-12">
+              <CarouselContent className="-ml-5">
+                {reviews.map((r) => (
+                  <CarouselItem key={r.name} className="pl-5 sm:basis-1/2 lg:basis-1/3">
+                    <div className="h-full rounded-2xl border border-border bg-card p-6 hover:border-primary/50 transition-colors flex flex-col">
+                      <div className="flex gap-0.5 mb-4">
+                        {Array.from({ length: 5 }).map((_, s) => (
+                          <Icon key={s} name="Star" size={16} className="text-primary fill-primary" />
+                        ))}
+                      </div>
+                      <p className="text-foreground/90 leading-relaxed mb-5 italic flex-1">«{r.text}»</p>
+                      <div className="flex items-center gap-3 pt-4 border-t border-border">
+                        <div className="grid place-items-center w-10 h-10 rounded-full bg-primary/15 border border-primary/25 font-display font-bold text-primary shrink-0">
+                          {r.name.charAt(0)}
+                        </div>
+                        <div>
+                          <div className="font-semibold leading-tight">{r.name}</div>
+                          <div className="text-sm text-muted-foreground">{r.role}</div>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="font-semibold leading-tight">{r.name}</div>
-                      <div className="text-sm text-muted-foreground">{r.role}</div>
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
+            </Carousel>
+            <p className="sm:hidden text-center text-sm text-muted-foreground mt-5 flex items-center justify-center gap-2">
+              <Icon name="MoveHorizontal" size={16} className="text-primary" /> Листайте вбок
+            </p>
+          </Reveal>
         </div>
       </section>
 
