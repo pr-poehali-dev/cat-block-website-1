@@ -166,19 +166,33 @@ const pains = [
 
 const Index = () => {
   const [form, setForm] = useState({ name: '', phone: '', experience: '' });
+  const [sending, setSending] = useState(false);
 
   const scrollToForm = () => {
     document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.phone.trim()) {
       toast.error('Заполните имя и телефон');
       return;
     }
-    toast.success('Заявка отправлена! Перезвоним в течение 30 минут.');
-    setForm({ name: '', phone: '', experience: '' });
+    setSending(true);
+    try {
+      const res = await fetch('https://functions.poehali.dev/0410b133-5131-41be-8049-d1753e029a71', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
+      toast.success('Заявка отправлена! Перезвоним в течение 30 минут.');
+      setForm({ name: '', phone: '', experience: '' });
+    } catch {
+      toast.error('Не удалось отправить. Попробуйте ещё раз или позвоните нам.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -535,8 +549,9 @@ const Index = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <Button type="submit" size="lg" className="w-full h-14 mt-6 text-base font-semibold rounded-lg glow-blue hover:scale-[1.02] transition-transform">
-                  <Icon name="Zap" size={20} /> Записаться на курс
+                <Button type="submit" size="lg" disabled={sending} className="w-full h-14 mt-6 text-base font-semibold rounded-lg glow-blue hover:scale-[1.02] transition-transform disabled:opacity-70 disabled:hover:scale-100">
+                  <Icon name={sending ? 'Loader2' : 'Zap'} size={20} className={sending ? 'animate-spin' : ''} />
+                  {sending ? 'Отправляем...' : 'Записаться на курс'}
                 </Button>
                 <p className="flex items-start gap-2 text-sm text-muted-foreground mt-4">
                   <Icon name="Lock" size={15} className="text-primary shrink-0 mt-0.5" />
