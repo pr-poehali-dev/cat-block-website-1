@@ -578,18 +578,52 @@ const Index = () => {
       </section>
 
       {/* FOOTER */}
-      <footer className="relative py-10 px-5 border-t border-border text-center pb-24 sm:pb-10">
-        <div className="flex items-center justify-center gap-2.5 mb-3">
-          <div className="grid place-items-center w-9 h-9 rounded-lg bg-primary">
-            <Icon name="Snowflake" size={20} className="text-primary-foreground" />
+      <footer className="relative py-12 px-5 border-t border-border bg-secondary/30 pb-24 sm:pb-12">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center justify-center gap-2.5 mb-8">
+            <div className="grid place-items-center w-9 h-9 rounded-lg bg-primary">
+              <Icon name="Snowflake" size={20} className="text-primary-foreground" />
+            </div>
+            <span className="font-display text-lg font-bold uppercase tracking-wide">
+              Авто<span className="text-primary">Климат</span>
+            </span>
           </div>
-          <span className="font-display text-lg font-bold uppercase tracking-wide">
-            Авто<span className="text-primary">Климат</span>
-          </span>
+
+          <div className="grid sm:grid-cols-2 gap-8 text-sm text-muted-foreground/80">
+            <div className="space-y-1.5">
+              <p className="text-foreground/70 font-medium mb-2">Реквизиты</p>
+              <p>ИП Комарницкий Евгений Вячеславович</p>
+              <p>ИНН: 251115894000</p>
+              <p>ОГРНИП: 313251124800034</p>
+              <p>Приморский край, г. Уссурийск, ул. Краснознаменная, 218</p>
+            </div>
+            <div className="space-y-1.5 sm:text-right">
+              <p className="text-foreground/70 font-medium mb-2">Контакты</p>
+              <p>
+                <a href="tel:+79140772357" className="hover:text-primary transition-colors">
+                  +7 (914) 077-23-57
+                </a>
+              </p>
+              <p>
+                <a href="mailto:spayn.05@mail.ru" className="hover:text-primary transition-colors">
+                  spayn.05@mail.ru
+                </a>
+              </p>
+              <div className="flex sm:justify-end gap-4 pt-2">
+                <a href="#" className="hover:text-primary transition-colors underline underline-offset-4">
+                  Политика конфиденциальности
+                </a>
+                <a href="#" className="hover:text-primary transition-colors underline underline-offset-4">
+                  Публичная оферта
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-center text-sm text-muted-foreground/60 mt-8 pt-8 border-t border-border">
+            Курс по диагностике и ремонту автокондиционеров · Уссурийск · © 2026
+          </p>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Курс по диагностике и ремонту автокондиционеров · Уссурийск · © 2026
-        </p>
       </footer>
 
       {/* MOBILE FIXED CTA */}
