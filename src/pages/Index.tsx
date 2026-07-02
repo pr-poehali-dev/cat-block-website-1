@@ -169,10 +169,21 @@ const Index = () => {
   const [form, setForm] = useState({ name: '', phone: '', experience: '' });
   const [agreed, setAgreed] = useState(false);
   const [sending, setSending] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const scrollToForm = () => {
-    document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' });
+  const navLinks = [
+    { id: 'program', label: 'Программа' },
+    { id: 'master', label: 'Преподаватель' },
+    { id: 'reviews', label: 'Отзывы' },
+    { id: 'faq', label: 'Вопросы' },
+  ];
+
+  const scrollTo = (id: string) => {
+    setMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const scrollToForm = () => scrollTo('signup');
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -205,7 +216,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section id="top" className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0">
           <img src={heroImg} alt="Мастер за работой" className="w-full h-full object-cover scale-105 blur-sm" />
@@ -218,21 +229,88 @@ const Index = () => {
         <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px]" />
 
         {/* Nav */}
-        <header className="absolute top-0 inset-x-0 z-20">
-          <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-6">
-            <div className="flex items-center gap-2.5">
+        <header className="absolute top-0 inset-x-0 z-30">
+          <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-5">
+            <button onClick={() => scrollTo('top')} className="flex items-center gap-2.5">
               <div className="grid place-items-center w-10 h-10 rounded-lg bg-primary glow-blue">
                 <Icon name="Snowflake" size={22} className="text-primary-foreground" />
               </div>
               <span className="font-display text-xl font-bold uppercase tracking-wide">
                 Авто<span className="text-primary">Климат</span>
               </span>
-            </div>
-            <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
-              <Icon name="MapPin" size={16} className="text-primary" /> Уссурийск
-            </div>
+            </button>
+
+            {/* Desktop nav */}
+            <nav className="hidden md:flex items-center gap-7">
+              {navLinks.map((l) => (
+                <button
+                  key={l.id}
+                  onClick={() => scrollTo(l.id)}
+                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {l.label}
+                </button>
+              ))}
+              <Button size="sm" onClick={scrollToForm} className="h-10 px-5 font-semibold rounded-lg glow-blue">
+                Записаться
+              </Button>
+            </nav>
+
+            {/* Mobile burger */}
+            <button
+              onClick={() => setMenuOpen(true)}
+              aria-label="Открыть меню"
+              className="md:hidden grid place-items-center w-11 h-11 rounded-lg border border-border bg-background/60 backdrop-blur"
+            >
+              <Icon name="Menu" size={24} />
+            </button>
           </div>
         </header>
+
+        {/* Mobile menu overlay */}
+        <div
+          className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300 ${
+            menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+        >
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-md" onClick={() => setMenuOpen(false)} />
+          <nav
+            className={`absolute right-0 top-0 h-full w-72 max-w-[80%] bg-card border-l border-border p-6 flex flex-col transition-transform duration-300 ${
+              menuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-8">
+              <span className="font-display text-lg font-bold uppercase tracking-wide">
+                Авто<span className="text-primary">Климат</span>
+              </span>
+              <button
+                onClick={() => setMenuOpen(false)}
+                aria-label="Закрыть меню"
+                className="grid place-items-center w-10 h-10 rounded-lg border border-border"
+              >
+                <Icon name="X" size={22} />
+              </button>
+            </div>
+            <div className="flex flex-col gap-1">
+              {navLinks.map((l) => (
+                <button
+                  key={l.id}
+                  onClick={() => scrollTo(l.id)}
+                  className="flex items-center justify-between py-3.5 px-3 rounded-lg text-base font-medium hover:bg-secondary/60 hover:text-primary transition-colors text-left"
+                >
+                  {l.label}
+                  <Icon name="ChevronRight" size={18} className="text-muted-foreground" />
+                </button>
+              ))}
+            </div>
+            <Button onClick={scrollToForm} className="h-13 mt-6 font-semibold rounded-lg glow-blue">
+              <Icon name="Zap" size={18} /> Записаться на курс
+            </Button>
+            <div className="mt-auto pt-6 flex items-center gap-2 text-sm text-muted-foreground">
+              <Icon name="MapPin" size={16} className="text-primary" /> Уссурийск
+            </div>
+          </nav>
+        </div>
 
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-5 pt-28 pb-32 sm:py-32 w-full">
@@ -322,7 +400,7 @@ const Index = () => {
       </section>
 
       {/* BLOCK 3 — PROGRAM */}
-      <section className="relative py-20 sm:py-28 px-5 overflow-hidden bg-secondary/20">
+      <section id="program" className="relative py-20 sm:py-28 px-5 overflow-hidden bg-secondary/20 scroll-mt-16">
         <div className="absolute inset-0 grid-lines opacity-40" />
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[130px]" />
         <div className="relative max-w-5xl mx-auto">
@@ -379,7 +457,7 @@ const Index = () => {
       </section>
 
       {/* BLOCK 4 — MASTER */}
-      <section className="relative py-20 sm:py-28 px-5 overflow-hidden">
+      <section id="master" className="relative py-20 sm:py-28 px-5 overflow-hidden scroll-mt-16">
         <div className="absolute top-0 left-1/4 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[130px]" />
         <div className="relative max-w-6xl mx-auto">
           <Reveal className="text-center mb-14">
@@ -448,7 +526,7 @@ const Index = () => {
       </section>
 
       {/* BLOCK 5 — REVIEWS WALL */}
-      <section className="relative py-20 sm:py-28 px-5 overflow-hidden bg-secondary/20">
+      <section id="reviews" className="relative py-20 sm:py-28 px-5 overflow-hidden bg-secondary/20 scroll-mt-16">
         <div className="absolute inset-0 grid-lines opacity-40" />
         <div className="absolute top-0 right-1/4 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[130px]" />
         <div className="relative max-w-6xl mx-auto">
@@ -589,7 +667,7 @@ const Index = () => {
       </section>
 
       {/* FAQ */}
-      <section className="relative py-20 sm:py-28 px-5 overflow-hidden bg-secondary/20">
+      <section id="faq" className="relative py-20 sm:py-28 px-5 overflow-hidden bg-secondary/20 scroll-mt-16">
         <div className="relative max-w-3xl mx-auto">
           <Reveal className="text-center mb-12">
             <h2 className="font-display text-3xl sm:text-5xl font-bold uppercase">
