@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -625,9 +626,9 @@ const Index = () => {
                 </a>
               </p>
               <div className="flex sm:justify-end gap-4 pt-2">
-                <a href="#" className="hover:text-primary transition-colors underline underline-offset-4">
+                <Link to="/privacy" className="hover:text-primary transition-colors underline underline-offset-4">
                   Политика конфиденциальности
-                </a>
+                </Link>
                 <a href="#" className="hover:text-primary transition-colors underline underline-offset-4">
                   Публичная оферта
                 </a>
