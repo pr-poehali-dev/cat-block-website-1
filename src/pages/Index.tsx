@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
@@ -170,6 +170,14 @@ const Index = () => {
   const [agreed, setAgreed] = useState(false);
   const [sending, setSending] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const navLinks = [
     { id: 'program', label: 'Программа' },
@@ -215,6 +223,49 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* FLOATING NAV */}
+      <header
+        className={`fixed top-0 inset-x-0 z-30 transition-all duration-300 ${
+          scrolled ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-lg shadow-background/40' : 'bg-transparent'
+        }`}
+      >
+        <div className={`max-w-6xl mx-auto flex items-center justify-between px-5 transition-all duration-300 ${scrolled ? 'py-3' : 'py-5'}`}>
+          <button onClick={() => scrollTo('top')} className="flex items-center gap-2.5">
+            <div className="grid place-items-center w-10 h-10 rounded-lg bg-primary glow-blue">
+              <Icon name="Snowflake" size={22} className="text-primary-foreground" />
+            </div>
+            <span className="font-display text-xl font-bold uppercase tracking-wide">
+              Авто<span className="text-primary">Климат</span>
+            </span>
+          </button>
+
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-7">
+            {navLinks.map((l) => (
+              <button
+                key={l.id}
+                onClick={() => scrollTo(l.id)}
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                {l.label}
+              </button>
+            ))}
+            <Button size="sm" onClick={scrollToForm} className="h-10 px-5 font-semibold rounded-lg glow-blue">
+              Записаться
+            </Button>
+          </nav>
+
+          {/* Mobile burger */}
+          <button
+            onClick={() => setMenuOpen(true)}
+            aria-label="Открыть меню"
+            className="md:hidden grid place-items-center w-11 h-11 rounded-lg border border-border bg-background/60 backdrop-blur"
+          >
+            <Icon name="Menu" size={24} />
+          </button>
+        </div>
+      </header>
+
       {/* HERO */}
       <section id="top" className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background image */}
@@ -227,45 +278,6 @@ const Index = () => {
         <div className="absolute inset-0 grid-lines opacity-60" />
         {/* Blue glow */}
         <div className="absolute -top-20 right-0 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px]" />
-
-        {/* Nav */}
-        <header className="absolute top-0 inset-x-0 z-30">
-          <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-5">
-            <button onClick={() => scrollTo('top')} className="flex items-center gap-2.5">
-              <div className="grid place-items-center w-10 h-10 rounded-lg bg-primary glow-blue">
-                <Icon name="Snowflake" size={22} className="text-primary-foreground" />
-              </div>
-              <span className="font-display text-xl font-bold uppercase tracking-wide">
-                Авто<span className="text-primary">Климат</span>
-              </span>
-            </button>
-
-            {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-7">
-              {navLinks.map((l) => (
-                <button
-                  key={l.id}
-                  onClick={() => scrollTo(l.id)}
-                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {l.label}
-                </button>
-              ))}
-              <Button size="sm" onClick={scrollToForm} className="h-10 px-5 font-semibold rounded-lg glow-blue">
-                Записаться
-              </Button>
-            </nav>
-
-            {/* Mobile burger */}
-            <button
-              onClick={() => setMenuOpen(true)}
-              aria-label="Открыть меню"
-              className="md:hidden grid place-items-center w-11 h-11 rounded-lg border border-border bg-background/60 backdrop-blur"
-            >
-              <Icon name="Menu" size={24} />
-            </button>
-          </div>
-        </header>
 
         {/* Mobile menu overlay */}
         <div
