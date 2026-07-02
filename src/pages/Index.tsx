@@ -641,6 +641,17 @@ const Index = () => {
         </div>
       </footer>
 
+      {/* FLOATING TELEGRAM BUTTON */}
+      <a
+        href="https://t.me/DjeksonUsk"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Написать в Telegram"
+        className="fixed right-4 bottom-24 sm:bottom-6 z-50 grid place-items-center w-14 h-14 rounded-full bg-[#229ED9] text-white shadow-lg shadow-[#229ED9]/40 hover:scale-110 transition-transform"
+      >
+        <Icon name="Send" size={26} />
+      </a>
+
       {/* MOBILE FIXED CTA */}
       <div className="sm:hidden fixed bottom-0 inset-x-0 z-50 p-3 bg-background/90 backdrop-blur-lg border-t border-border">
         <Button onClick={scrollToForm} className="w-full h-13 py-4 text-base font-semibold rounded-lg glow-blue">
